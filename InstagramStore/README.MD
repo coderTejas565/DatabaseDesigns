@@ -1,4 +1,4 @@
-# Instagram Store — Database Design (ER Diagram)
+# Instagram Store - Database Design (ER Diagram)
 
 ## Project Overview
 
@@ -168,15 +168,13 @@ InstagramStore/
 
 ## ER Diagram
 
-> Add your exported diagram below:
-
 ![ER Diagram](./ER-diagram.png)
 
 ---
 
 ## Tools Used
 
-* Eraser / Excalidraw (for diagram design)
+* Eraser (for diagram design)
 
 ---
 
