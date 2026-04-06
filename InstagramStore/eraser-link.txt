@@ -1,0 +1,88 @@
+product {
+  id serial pk
+  product_name varchar(70)
+  product_type ENUM('thrift', 'handmade') NOT NULL
+  product_desc text
+  category varchar(30)
+  product_avatar_url text
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+product_variant {
+  id serial pk
+  product_id int fk not null
+  size varchar(20)
+  color varchar(20)
+  condition varchar(20)
+  price DECIMAL(10,2)
+  stock_quantity int not null
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+customer [icon: users] {
+  id serial pk
+  name varchar(50) not null
+  email varchar(100) unique not null
+  phone varchar(15) unique not null
+  address text
+  city varchar(20)
+  pin_code varchar(10)
+  
+  created_at timestamp
+  updated_at timestamp
+}
+
+order {
+  id serial pk
+  customer_id int fk not null
+  order_status ENUM('pending','paid','shipped','delivered','cancelled')
+  total_amount DECIMAL(10,2)
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+orderitem {
+  id serial pk
+  order_id int fk not null
+  product_variant_id int fk not null 
+  quantity int not null
+  price_at_purchase DECIMAL(10,2) not null
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+payment [icon: payment,color: blue] {
+  id serial pk
+  order_id int fk not null
+  payment_status ENUM('pending','completed','failed','refunded') not null
+  payment_method varchar(20)
+  amount DECIMAL(10,2) not null
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+Delivery{
+  id serial pk
+  order_id int fk not null
+  status ENUM('pending','shipped','out_for_delivery','delivered')
+  address text
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+
+customer.id < order.customer_id
+order.id < orderitem.order_id
+product.id < product_variant.product_id
+product_variant.id < orderitem.product_variant_id
+order.id - payment.order_id
+order.id < Delivery.order_id
+
