@@ -44,7 +44,7 @@ Each project directory includes:
 | Day | Project         | Status        |
 | --- | --------------- | ------------- |
 | 1   | Instagram Store | ✅ Completed   |
-| 2   | —               | ⏳ In Progress |
+| 2   | Trainer–Client Coaching Platform               | ✅ Completed   |
 | 3   | —               | ⏳ Pending     |
 | 4   | —               | ⏳ Pending     |
 | 5   | —               | ⏳ Pending     |
