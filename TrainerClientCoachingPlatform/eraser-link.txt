@@ -1,0 +1,96 @@
+user {
+  id serial pk
+  name varchar(50) not null
+  email varchar(100) unique not null
+  phone varchar(15) unique not null
+  role ENUM('trainer','client') not null
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+plan [color: Green] {
+  id serial pk
+  trainer_id int fk not null
+  name varchar(50) not null
+  type ENUM('consultation','coaching','live')
+  duration_days int
+  price DECIMAL(10,2)
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+subscription [color: Red] {
+  id serial pk
+  client_id int fk not null
+  plan_id int fk not null
+  start_date date
+  end_date date
+  status ENUM('active','completed','cancelled')
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+session [color: Yellow] {
+  id serial pk
+  subscription_id int fk not null
+  type ENUM('consultation','coaching')
+  scheduled_at timestamp
+  status ENUM('scheduled','completed','cancelled')
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+payment [color: Blue] {
+  id serial pk
+  subscription_id int fk not null
+  amount DECIMAL(10,2) not null
+  status ENUM('pending','completed','failed','refunded')
+  method varchar(20)
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+progress_log [color: Orange] {
+  id serial pk
+  client_id int fk not null
+  weight DECIMAL(5,2)
+  body_fat DECIMAL(5,2)
+  notes text
+  recorded_at date
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+check_in [color: Red] {
+  id serial pk
+  subscription_id int fk not null
+  report_text text
+  submitted_at timestamp
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+trainer_notes [color: Yellow] {
+  id serial pk
+  subscription_id int fk not null
+  note text
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+user.id < plan.trainer_id
+user.id < subscription.client_id
+plan.id < subscription.plan_id
+subscription.id < session.subscription_id
+subscription.id < payment.subscription_id
+subscription.id < check_in.subscription_id
+subscription.id < trainer_notes.subscription_id
+user.id < progress_log.client_id
