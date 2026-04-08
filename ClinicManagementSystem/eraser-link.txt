@@ -1,0 +1,101 @@
+user {
+  id serial pk
+  name varchar(50) not null
+  email varchar(100) unique not null
+  phone varchar(15) unique not null
+  role ENUM('doctor','patient') not null
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+doctor [color: Green] {
+  id serial pk
+  speciality_id fk not null
+  user_id fk not null
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+patient [color : Blue]{
+  id serial pk
+  user_id fk not null
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+ speciality [color: yellow]{
+  id serial pk
+  name varchar(50) not null 
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+appointment [color: Red] {
+  id serial pk
+  patient_id int fk not null
+  doctor_id int fk not null
+  status ENUM('scheduled','completed','cancelled')
+  scheduled_at timestamp NOT NULL
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+consultations [color: Yellow] {
+  id serial pk
+  appointment_id fk not null
+  scheduled_at timestamp
+  status ENUM('scheduled','completed','cancelled')
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+payment [color: Blue] {
+  id serial pk
+  patient_id int fk not null
+  amount DECIMAL(10,2) not null
+  appoinment_id fk null
+  status ENUM('pending','completed','failed','refunded')
+  method varchar(20)
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+report [color: Orange] {
+  id serial pk
+  patient_id int fk not null
+  test_id fk not null
+  consultation_id fk not null
+  report_text text not null
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+diagnostic_test [color: Red] {
+  id serial pk
+  test_name varchar(100) not null
+  status ENUM('prescribed','completed','cancelled')
+  submitted_at timestamp
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+
+user.id - doctor.user_id
+user.id - patient.user_id
+speciality.id < doctor.speciality_id
+patient.id < appointment.patient_id
+doctor.id < appointment.doctor_id
+appointment.id - consultations.appointment_id
+patient.id < payment.patient_id
+patient.id < report.patient_id
+diagnostic_test.id - report.test_id
+consultations.id < report.consultation_id
