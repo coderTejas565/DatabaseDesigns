@@ -1,0 +1,85 @@
+vehicle{
+  id serial pk
+  number_plate varchar unique not null
+  vehicle_type_id fk not null
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+ vehicle_type [color:red] {
+  id serial pk
+  type ENUM('bike','car','suv','cab','EV')
+
+  created_at timestamp 
+  updated_at timestamp
+ }
+
+ parking_zone{
+  id serial pk
+  name varchar(30) not null
+  level ENUM('L1','L2','basement')
+
+  created_at timestamp
+  updated_at timestamp
+ }
+
+spot_category{
+  id serial pk
+  type ENUM('normal','VIP','staff','EV','Exhibitor')
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+parking_spot {
+  id serial pk
+  zone_id fk not null
+  spot_category_id fk not null
+  is_available boolean
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+parking_session {
+  id serial pk
+  vehicle_id fk not null
+  spot_id fk not null
+  entry_time timestamp not null
+  exit_time timestamp null  
+  status ENUM('active','completed')
+  duration int null
+
+  created_at timestamp 
+  updated_at timestamp
+}
+
+ ticket [color: yellow]{
+  id serial pk
+  session_id fk not null
+  issued_at timestamp
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+payment [color: Blue] {
+  id serial pk
+  session_id int fk not null
+  amount DECIMAL(10,2) not null
+  status ENUM('pending','completed','failed','refunded')
+  method varchar(20)
+  paid_at timestamp
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+ vehicle_type.id < vehicle.vehicle_type_id
+ vehicle.id < parking_session.vehicle_id
+ parking_spot.id < parking_session.spot_id
+ parking_session.id - ticket.session_id
+ parking_session.id < payment.session_id
+ parking_zone.id < parking_spot.zone_id
+ spot_category.id < parking_spot.spot_category_id
