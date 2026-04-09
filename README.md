@@ -46,7 +46,7 @@ Each project directory includes:
 | 1   | Instagram Store | ✅ Completed   |
 | 2   | Trainer–Client Coaching Platform               | ✅ Completed   |
 | 3   | Clinic Management System               | ✅ Completed     |
-| 4   | —               | ⏳ Pending     |
+| 4   | Parking Management System               | ✅ Completed     |
 | 5   | —               | ⏳ Pending     |
 
 ---
