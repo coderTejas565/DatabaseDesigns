@@ -1,0 +1,96 @@
+building [color: yellow] {
+  id serial pk
+  name varchar(50) not null
+  location varchar(100) not null
+  total_floors int
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+floor [color:blue]  {
+  id serial pk
+  floor_number int not null
+  building_id int fk not null
+
+  created_at timestamp 
+  updated_at timestamp
+}
+
+elevator {
+  id serial pk
+  building_id int fk not null 
+  capacity int not null
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+floor_request [color:purple] {
+  id serial pk
+  floor_id int fk not null
+  destination_floor_id int fk not null
+  direction ENUM('up','down')
+  status ENUM('pending','assigned','completed')
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+assignment [color: Orange] {
+  id serial pk
+  request_id int fk not null
+  elevator_id int fk not null
+  assigned_at timestamp
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+ride [color:red] {
+  id serial pk
+  elevator_id int fk not null
+  assignment_id int fk not null
+  start_floor_id int fk not null
+  end_floor_id int fk not null
+  status ENUM('active','completed')
+  start_time timestamp
+  end_time timestamp
+
+  created_at timestamp 
+  updated_at timestamp
+}
+
+elevator_status [color:green] {
+  id serial pk
+  elevator_id int fk unique not null
+  current_floor int not null
+  status ENUM('idle','moving','maintenance')
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+maintenance [color:red] {
+  id serial pk
+  elevator_id int fk not null
+  issue text
+  start_time timestamp
+  end_time timestamp
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+building.id < floor.building_id
+building.id < elevator.building_id
+floor.id < floor_request.floor_id
+floor.id < floor_request.destination_floor_id
+floor_request.id < assignment.request_id
+elevator.id < assignment.elevator_id
+assignment.id < ride.assignment_id
+elevator.id < ride.elevator_id
+floor.id < ride.start_floor_id
+floor.id < ride.end_floor_id
+elevator.id - elevator_status.elevator_id
+elevator.id < maintenance.elevator_id
