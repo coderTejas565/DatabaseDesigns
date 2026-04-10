@@ -47,7 +47,7 @@ Each project directory includes:
 | 2   | Trainer–Client Coaching Platform               | ✅ Completed   |
 | 3   | Clinic Management System               | ✅ Completed     |
 | 4   | Parking Management System               | ✅ Completed     |
-| 5   | —               | ⏳ Pending     |
+| 5   | Elevator System               | ✅ Completed     |
 
 ---
 
