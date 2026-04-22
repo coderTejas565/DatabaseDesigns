@@ -1,0 +1,90 @@
+team {
+  id serial pk
+  name varchar(100) not null
+  city varchar(100)
+  homeground varchar(100)
+  owner_id int fk
+  founded_year int not null
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+player {
+  id serial pk
+  name varchar(50) not null
+  role ENUM('batsman','bowler','allrounder')
+  country varchar(40)
+  runs int
+  wickets int
+
+  created_at timestamp 
+  updated_at timestamp
+}
+
+team_player {
+  id serial pk
+  team_id int fk not null
+  player_id int fk not null
+  season_year int not null
+  price DECIMAL(10,2)
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+owner {
+  id serial pk
+  name varchar(50) not null
+  company_name varchar(40)
+  net_worth DECIMAL(10,2)
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+sponsor {
+  id serial pk
+  name varchar(50)
+  industry varchar(30)
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+team_sponsor {
+  id serial pk
+  team_id int fk not null
+  sponsor_id int fk not null
+  sponsorship_type varchar(30)
+  amount DECIMAL(10,2)
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+broadcaster {
+  id serial pk
+  name varchar(50) not null
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+broadcaster_deal {
+  id serial pk
+  broadcaster_id int fk not null
+  start_year int not null
+  end_year int not null
+  amount DECIMAL(10,2)
+
+  created_at timestamp
+  updated_at timestamp
+}
+
+owner.id < team.owner_id
+team.id < team_player.team_id
+player.id < team_player.player_id
+team.id < team_sponsor.team_id
+sponsor.id < team_sponsor.sponsor_id
+broadcaster.id < broadcaster_deal.broadcaster_id
