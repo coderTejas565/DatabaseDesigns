@@ -1,3 +1,12 @@
+league {
+  id serial pk
+  name varchar(100)  
+  year int         
+
+  created_at
+  updated_at
+}
+
 team {
   id serial pk
   name varchar(100) not null
@@ -88,3 +97,6 @@ player.id < team_player.player_id
 team.id < team_sponsor.team_id
 sponsor.id < team_sponsor.sponsor_id
 broadcaster.id < broadcaster_deal.broadcaster_id
+league.id < team.league_id
+league.id < broadcaster_deal.league_id
+league.id < team_player.league_id 
