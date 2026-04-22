@@ -48,6 +48,7 @@ Each project directory includes:
 | 3   | Clinic Management System               | ✅ Completed     |
 | 4   | Parking Management System               | ✅ Completed     |
 | 5   | Elevator System               | ✅ Completed     |
+| 6   | IPL Management System | ✅ Completed     |
 
 ---
 
